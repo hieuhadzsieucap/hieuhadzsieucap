@@ -2,7 +2,7 @@ from flask import Flask
 from models import *  # import file models.py previously created
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:hieu05112003@localhost:5432/Project_final_python"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:hieu05112003@localhost:5432/website_ban_hang"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)  # tie db with flask app
 

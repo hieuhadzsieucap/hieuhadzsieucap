@@ -6,7 +6,7 @@ from sqlalchemy import or_
 # convert_int_to_str use for convert the value after calculate from interger to string to display
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:hieu05112003@localhost:5432/Project_final_python"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:hieu05112003@localhost:5432/website_ban_hang"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
