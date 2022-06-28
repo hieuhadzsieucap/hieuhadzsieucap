@@ -11,6 +11,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
+# app route load home page
 @app.route("/")
 def home():
     products = Product.query.all()
@@ -26,6 +27,7 @@ def home():
     return render_template("1_home.html", products = products, origins = origins)
 
 
+# app route use for update and delete product in warehouse
 @app.route("/warehouse")
 def warehouse():
     request_minus = request.args.get("minus")
@@ -52,6 +54,7 @@ def warehouse():
     return render_template("2_warehouse.html", products = products)
 
 
+# app route use for add product to warehouse
 @app.route("/add_to_warehouse")
 def add_to_warehouse():
     products = Product.query.all()
@@ -71,6 +74,7 @@ def add_to_warehouse():
     return render_template("2_warehouse.html", products = products)
 
 
+# app route use for search by filter
 @app.route("/search_by_origin")
 def search_by_origin():
     products = Product.query.all()
@@ -92,6 +96,7 @@ def search_by_origin():
     return render_template("1_home.html",  products = products_display, origins = origins)
 
 
+# app route use for add to cart
 @app.route("/add_to_cart")
 def add_to_cart():
     products = Product.query.all()
@@ -121,6 +126,7 @@ def add_to_cart():
     return render_template("1_home.html",  products = products, origins = origins)
 
 
+# app route use for change and delete product in user cart
 @app.route("/cart")
 def cart():
     # each time button is pressed, the sever recive the id of product beacuse(the button carries the id of the product)
