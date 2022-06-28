@@ -1,0 +1,76 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+<style>
+    .button-group{
+        display: flex;
+        justify-content: center;
+    }
+    .button{
+        padding: 15px;
+    }
+    .product-items {
+        display: flex;
+        justify-content: center;
+        background-color: #ddd;
+        padding: 12px;
+    }
+    .product-item {
+        width: 19%;
+        background-color: #fff;
+        padding: 12px;
+        text-align: center;
+    }
+    .product-item img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .product-item-text {
+        display: flex;
+        justify-content: space-between;
+    }
+    .product-item-text h1 {
+        font-weight: bold;
+        font-size: 15px;
+    }
+    .product-item button {
+        margin-top: 12px;
+        height: 30px;
+        padding: 0 12px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+    .product-item button:hover {
+        background-color: tomato;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class = "button-group">
+        {% for origin in origins %}  
+        <form action="{{ url_for('search_by_origin') }}" method="get">
+            <div class = "button"> 
+                <button class="btn btn-secondary" name = "filter origin" value = "{{ origin }}">{{origin}}</button>
+            </div>
+        </form>
+        {% endfor %}   
+    </div>
+    <div class="product-items">
+        {% for product in products %}  
+            <div class="product-item">
+                <form action="{{ url_for('add_to_cart') }}" method="get">
+                    <img src = {{product.link_img}}>
+                    <div class = "product-item-text">
+                        <p><span>{{product.price}}</span><sup>đ</sup></p>
+                        <h1>{{product.product_name}}</h1>
+                    </div>
+                    <button name="button add" value="{{product.product_id}}">Add to cart</button>
+                </form>
+            </div>
+        {% endfor %}   
+    </div>
+</div>
+{% endblock %}

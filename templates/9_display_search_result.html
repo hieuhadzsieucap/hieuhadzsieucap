@@ -1,0 +1,33 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Receipt id: {{receipt.receipt_id}}</h1>
+        <p>Customer name: {{customer.customer_name}}</p>
+        <p>Phone number: {{customer.phone}}</p>
+        <p>Customer gender: {{customer.gender}}</p>
+        <p>Customer address: {{customer.address}}</p>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="2" scope="col">Product</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td><img width = "80px"src={{product.link_img}}></td>
+                    <td>{{product.product_name}}</td>
+                    <td>{{product.price}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <h3 style="text-align:center">Total price: <span>{{total_price}}</span><sup>đ</sup></>
+        </div>
+    </div>
+{% endblock %}

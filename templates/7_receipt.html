@@ -1,0 +1,89 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Receipt Detail</h1>
+        <form>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Receipt_ID</th>
+                        <th scope="col">Product name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Price</th>
+                        <th scope="col" colspan="2">Select</th>
+                    </tr>
+                </thead>
+                <form action="{{ url_for('receipt') }}">
+                    <tbody>
+                        {% for receipt in receipts %}
+                            <tr>
+                                <td>{{receipt.receipt_id}}</td>
+                                <td>
+                                    {% for product_id in receipt.product_id.split('/') %}
+                                        <p>{{ product_id }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for price in receipt.price.split('/') %}
+                                        <p><span>{{ price }}</span><sup>đ</sup></p>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for quantity in receipt.quantity.split('/') %}
+                                        <p>
+                                            {{ quantity }}
+                                        </p>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <p><span>{{receipt.total_price}}</span><sup>đ</sup></p>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Change
+                                        </button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Receipt id: {{ receipt.receipt_id }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                    </div>
+                                                    <form action="{{ url_for('receipt') }}" method="get">
+                                                        <div class="modal-body">
+                                                            <form class="row g-3" class="form">
+                                                                <div class="col-12">
+                                                                    <label class="form-label">Product name</label>
+                                                                    <input name=product_name type="text" class="form-control" placeholder="{{receipt.product_id}}" disabled>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <label class="form-label">Quantity</label>
+                                                                    <input name=product_quantity type="text" class="form-control" placeholder="{{receipt.quantity}}">
+                                                                </div>
+                                                            </form>                                         
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary" name="button_change" value="{{receipt.receipt_id}}">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger" name="button_delete" value="{{receipt.receipt_id}}">delete</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </form>
+                   
+            </table>
+{% endblock %}

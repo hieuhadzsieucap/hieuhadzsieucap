@@ -1,0 +1,76 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+<style>
+    .col-24 {
+      margin-left: 500px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<form action="{{ url_for('bill') }}" method="get">
+    <div class="container">
+      <table class="table">
+        <h1>Bill</h1>
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Products</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <th><img width="80" src={{product.link_img}}>{{product.product_name}}</th>
+            <td>
+              <p><span>{{product.price}}</span><sup>đ</sup></p>
+            </td>
+            <td>
+              <p>{{product.quantity}}</p>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td>Provisional ({{number_of_product}} product)</td>
+            <td></td>
+            <td>
+              <p name='TongTien'><span>{{total_price}}</span><sup>đ</sup></pTongTien>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <form action="{{ url_for('bill') }}" method="get">
+        <fieldset class="row mb-3">
+          <legend class="col-form-label col-sm-12 pt-0">Information customer</legend>
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="input_gender" id="gridRadios1" value="Male" checked>
+              <label class="form-check-label" for="gridRadios1">Male</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="input_gender" id="gridRadios2" value="Female">
+              <label class="form-check-label" for="gridRadios2">Female</label>
+            </div>
+          </div>
+        </fieldset>
+        <form class="row g-3" class="form">
+          <div class="col-12">
+            <label class="form-label">Name</label>
+            <input name=input_name type="text" class="form-control">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Phone</label>
+            <input name=input_phone type="phone" class="form-control">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Address</label>
+            <input name=input_address type="text" class="form-control">
+          </div>
+          <div class="col-24">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </form>
+    </div>
+</form>
+{% endblock %}

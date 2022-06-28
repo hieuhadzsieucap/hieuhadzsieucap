@@ -1,0 +1,57 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+    <style>
+        .container div {
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>CART</h1>
+        <form>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th colspan = 2 scope="col">Item</th>
+                        <th scope="col">Price</th>
+                        <th scope="col" colspan = 3 style ="text-align: center;">Quantity</th>
+                        <th scope="col">Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td><img width = "80px"src={{product.link_img}}></td>
+                        <td style = "text-align: left;">{{product.product_name}}</td>
+                        <td>
+                            <p><span>{{product.price}}</span><sup>đ</sup></p>
+                        </td>
+                        <td>
+                            <div href="http://127.0.0.1:5000/cart">
+                                <button style = "text-align:right;" name="minus" value="{{product.product_id}}">-</button>
+                            </div>
+                        </td>
+                        <td><p align="center">{{product.quantity}}</p></td>
+                        <div href="http://127.0.0.1:5000/cart">
+                            <td><button name="add" value="{{product.product_id}}">+</button></td>
+                        </div> 
+                        <div href="http://127.0.0.1:5000/cart">
+                            <td><button style = "background-color: rgb(187, 38, 38); color: white"
+                                name="button delete" value="{{product.product_id}}">Delete</button></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <p>Total price: <span>{{total_price}}</span><sup>đ</sup></p>
+            </div>
+            <div>
+                <a class="btn btn-primary" style = "background-color:rgb(2, 90, 2); color:#ddd; align-items:right"  
+            href="http://127.0.0.1:5000/pay" role="button">Pay up</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

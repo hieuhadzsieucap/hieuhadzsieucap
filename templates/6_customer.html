@@ -1,0 +1,134 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Customer</h1>
+        <form action="{{ url_for('customer') }}" method="get">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Customer id</th>
+                        <th scope="col">Receipt id</th>
+                        <th scope="col">Customer name</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col" colspan="2">Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in customers %}
+                    <tr>
+                        <td>{{customer.customer_id}}</td>
+                        <td>
+                            {% for i in customer.receipt_id.split('/') %}  
+                                {% if i in receipts %} <!-- filter of price range -->
+                                    {{ i }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        
+                        <td>{{customer.customer_name}}</td>
+                        <td>{{customer.gender}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Change
+                              </button>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Customer id: {{ customer.customer_id }}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <form action="{{ url_for('customer') }}" method="get">
+                                        <div class="modal-body">
+                                            <fieldset class="row mb-3">
+                                                    <div class="col-sm-10">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="input_gender" id="gridRadios1" value="Male" checked>
+                                                        <label class="form-check-label" for="gridRadios1">Male</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="input_gender" id="gridRadios2" value="Female">
+                                                        <label class="form-check-label" for="gridRadios2">Female</label>
+                                                    </div>
+                                                    </div>
+                                                </fieldset>
+                                                <form class="row g-3" class="form">
+                                                    <div class="col-12">
+                                                    <label class="form-label">Name</label>
+                                                    <input name=input_name type="text" class="form-control">
+                                                    </div>
+                                                    <div class="col-12">
+                                                    <label class="form-label">Phone</label>
+                                                    <input name=input_phone type="phone" class="form-control">
+                                                    </div>
+                                                    <div class="col-12">
+                                                    <label class="form-label">Address</label>
+                                                    <input name=input_address type="text" class="form-control">
+                                                    </div>
+                                                </form>                                         
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary" name="button_change" value="{{customer.customer_id}}">Save changes</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" name="button_delete" value="{{customer.customer_id}}">delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <form action="{{ url_for('search_by_filter_customer') }}" method="get">
+                <div class="row justify-content-between">
+                    <div class="col-4">
+                        <p>Price range</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name = "checkbox_less_than" value="100000000" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                <!-- &lt; mean less than sign instead of < -->
+                                &lt;<span>100.000.000</span><sup>đ</sup>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name = "checkbox_greater_than" value="100000000" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                <!-- &gt; mean greater than sign instead of > -->
+                                &gt;<span>100.000.000</span><sup>đ</sup>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <p>Gender</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkbox_male" value="Male" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                            Male
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="checkbox_female" value="Female" id="defaultCheck2" >
+                            <label class="form-check-label" for="defaultCheck2">
+                            Female
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </form>
+    </div>
+{% endblock %}

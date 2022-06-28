@@ -1,0 +1,23 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+<style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      max-width: 1150px;
+      margin-top: 100px;
+      margin-left: 70px;
+      margin-right: 70px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+{{ test }}
+<div class = "container">
+    <h2 class="text-center">Your order is successful</h2>
+    <a name = "comfirm delete" value = "1" style = "margin-left: 470px;" href="http://127.0.0.1:5000/delete_product_in_cart">Click here to go back</a>
+  </div>
+{% endblock %}

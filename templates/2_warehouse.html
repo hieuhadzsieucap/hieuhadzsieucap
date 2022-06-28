@@ -1,0 +1,76 @@
+{% extends "0_navbar.html" %}
+{% block style %}
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+  <h1>WAREHOUSE</h1>
+  <form>
+    <table class="table">
+      <thead class="thead-dark">
+        <th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col" colspan=3>Quantity</th>
+        <th scope="col">Select</th>
+        </th>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <th>{{ product.product_id }}</th>
+          <th><img width="80" src={{product.link_img}}>{{product.product_name}}</th>
+          <td>
+            <p><span>{{product.price}}</span><sup>đ</sup></p>
+          </td>
+          <td>
+            <div href="http://127.0.0.1:5000/warehouse">
+              <!-- if user click on button, web will reload by link url -->
+              <button style="text-align:right;" name="minus" value="{{product.product_id}}">-</button>
+            </div>
+          </td>
+          <td>
+            <p align="center">{{product.quantity}}</p>
+          </td>
+          <div href="http://127.0.0.1:5000/warehouse">
+            <td><button name="add" value="{{product.product_id}}">+</button></td>
+          </div>
+          <div href="http://127.0.0.1:5000/warehouse">
+            <td><button style="background-color: rgb(187, 38, 38); color: white" name="button delete"
+                value="{{product.product_id}}">delete</button></td>
+          </div>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+  <form action="{{ url_for('add_to_warehouse') }}" method="get">
+    <form class="row g-3" class="form">
+      <div class="col-12">
+        <label class="form-label">Name Product</label>
+        <input name=product_name type="text" class="form-control">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Price</label>
+        <input name=price type="text" class="form-control">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Quantity</label>
+        <input name=quantity type="text" class="form-control">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Origin</label>
+        <input name=origin type="text" class="form-control">
+      </div>
+      <div class="col-12">
+        <label class="form-label">Link Img</label>
+        <input name=link type="text" class="form-control">
+      </div>
+      <div class="col-24">
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+  </form>
+</div>
+{% endblock %}
