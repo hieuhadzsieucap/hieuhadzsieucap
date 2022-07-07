@@ -11,7 +11,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 
-# this is a change
 # app route load home page
 @app.route("/")
 def home():
