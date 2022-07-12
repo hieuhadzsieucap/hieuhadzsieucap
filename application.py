@@ -1,15 +1,24 @@
+import os
 from flask import Flask, render_template, request
 from package.models import *
-from package.convert import convert_str_to_int, convert_int_to_str
 from sqlalchemy import or_
+
+from package.convert import convert_str_to_int
 # convert_str_to_int use for convert price of product from string to interger to calculate
+from package.convert import convert_int_to_str
 # convert_int_to_str use for convert the value after calculate from interger to string to display
 
+from dotenv import load_dotenv # the package use for load information form .env file
+
+load_dotenv()
+
+password = os.getenv('password') # you can input your own password here folow syntax password = 'your password'
+localhost = os.getenv('localhost') # The command is the same as above
+
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:0511@localhost:5432/website_ban_hang"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://postgres:{password}@localhost:{localhost}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
-
 
 # app route load home page
 @app.route("/")
@@ -324,19 +333,19 @@ def search_by_filter_customer():
         , Receipt.total_price > int(request_price_greater_than)))
         for receipt in receipts_satisfy_the_condition:
             receipts.append(receipt.receipt_id)
-    
+
     elif request_price_less_than != None:
         receipts_satisfy_the_condition = Receipt.query.filter(
             Receipt.total_price < int(request_price_less_than)).all()
         for receipt in receipts_satisfy_the_condition:
             receipts.append(receipt.receipt_id)
-    
+
     elif request_price_greater_than != None:
         receipts_satisfy_the_condition = Receipt.query.filter(
             Receipt.total_price > int(request_price_greater_than)).all()
         for receipt in receipts_satisfy_the_condition:
             receipts.append(receipt.receipt_id)
-    
+
     if receipts == []:
         list_receipts = Receipt.query.all()
         for receipt in list_receipts:
@@ -345,13 +354,13 @@ def search_by_filter_customer():
     customers = []  # empty list carier customers satify
     request_male = request.args.get("checkbox_male")
     request_female = request.args.get("checkbox_female")
-    
+
     if request_male and request_female != None:
         customers = Customer.query.filter(or_(Customer.gender == "Male", Customer.gender == "Female"))
-    
+
     elif request_male != None:
         customers = Customer.query.filter_by(gender = "Male").all()
-    
+
     elif request_female != None:
         customers = Customer.query.filter_by(gender = "Female").all()
 
@@ -367,15 +376,15 @@ def receipt():
     # code below use for change receipt
     request_change = request.args.get("button_change")
     request_product_quantity = request.args.get("product_quantity")
-    
+
     infor_receipt_request_change = Receipt.query.get(request_change)
-     
+
     if request_change != None:
         infor_receipt_request_change.quantity = request_product_quantity
         quantity = request_product_quantity.split('/')
         price = infor_receipt_request_change.price.split('/')
         total_price = 0
-        
+
         for index in range(len(quantity)):
             total_price += int(quantity[index]) * convert_str_to_int(price[index])
         infor_receipt_request_change.total_price = total_price
@@ -410,7 +419,7 @@ def search_result():
     search_request = request.args.get("request_id_receipt")
     receipt = Receipt.query.get(search_request)
     quantity = receipt.quantity.split("/")
-    
+
     total_price = 0
     products = []
     products_id = receipt.product_id.split("/")
@@ -424,7 +433,7 @@ def search_result():
     for customer in customers:
         if str(search_request) in customer.receipt_id:
             customer_satisfies_the_condition = customer
-    
+
     return render_template("9_display_search_result.html", receipt = receipt, customer = customer_satisfies_the_condition, products = products, total_price = convert_int_to_str(total_price))
 
 
