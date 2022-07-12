@@ -8,9 +8,6 @@ from package.convert import convert_str_to_int
 from package.convert import convert_int_to_str
 # convert_int_to_str use for convert the value after calculate from interger to string to display
 
-from dotenv import load_dotenv # the package use for load information form .env file
-
-load_dotenv()
 
 password = os.getenv('password') # you can input your own password here folow syntax password = 'your password'
 localhost = os.getenv('localhost') # The command is the same as above
