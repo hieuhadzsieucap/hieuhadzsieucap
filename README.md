@@ -2,7 +2,7 @@
 - This is a final exam of subject Python programming 2
 - Author: Hà Trung Hiếu (2121051127 - Đại học Mỏ-Địa chất)
 
-requirements <br/>
+REQUIRMENT: <br/>
 __database: PostgresSQL <br/>
 __package python: <br/>
 - pip install flask
