@@ -4,8 +4,8 @@ Note:
 - Author: Hà Trung Hiếu (2121051127 - Đại học Mỏ-Địa chất)
 
 requirements
-+database: PostgresSQL
-+package python:
+/n database: PostgresSQL
+/n package python:
 - pip install flask
 - pip install sqlalchemy
 - pip install flask_sqlalchemy
